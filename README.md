@@ -14,7 +14,7 @@ This is Part 1 of [ChomCHOB Backend Testing](https://github.com/ChomCHOB/chomcho
 $ npm install 
 ```
 
-# Initial the database**
+# Initial the database
 ```bash
 $ npx sequelize-cli db:create
 $ npx sequelize-cli db:migrate
