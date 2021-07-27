@@ -1,0 +1,44 @@
+{
+  "development": {
+    "username": "root",
+    "password": "30061996",
+    "database": "crypto_development",
+    "host": "127.0.0.1",
+    "dialect": "mysql",
+    "define": {
+      "charset": "utf8",
+      "dialectOptions": {
+        "collate": "utf8_general_ci"
+      },
+      "timestamps": true
+    }
+  },
+  "test": {
+    "username": "root",
+    "password": "30061996",
+    "database": "crypto_test",
+    "host": "127.0.0.1",
+    "dialect": "mysql",
+    "define": {
+      "charset": "utf8",
+      "dialectOptions": {
+        "collate": "utf8_general_ci"
+      },
+      "timestamps": true
+    }
+  },
+  "production": {
+    "username": "root",
+    "password": "30061996",
+    "database": "crypto_development",
+    "host": "127.0.0.1",
+    "dialect": "mysql",
+    "define": {
+      "charset": "utf8",
+      "dialectOptions": {
+        "collate": "utf8_general_ci"
+      },
+      "timestamps": true
+    }
+  }
+}
