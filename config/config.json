@@ -1,7 +1,7 @@
 {
   "development": {
     "username": "root",
-    "password": "30061996",
+    "password": "",
     "database": "crypto_development",
     "host": "127.0.0.1",
     "dialect": "mysql",
@@ -15,7 +15,7 @@
   },
   "test": {
     "username": "root",
-    "password": "30061996",
+    "password": "",
     "database": "crypto_test",
     "host": "127.0.0.1",
     "dialect": "mysql",
@@ -29,8 +29,8 @@
   },
   "production": {
     "username": "root",
-    "password": "30061996",
-    "database": "crypto_development",
+    "password": "",
+    "database": "crypto_production",
     "host": "127.0.0.1",
     "dialect": "mysql",
     "define": {

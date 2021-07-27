@@ -1,20 +1,26 @@
 import { Op } from "sequelize";
 import Models from "../../../models";
+import { Serializer } from "jsonapi-serializer";
 
 const User = Models.User;
 const UserController = {};
 
-UserController.findOne = (req, res) => {
-  const { username } = req.body;
-  User.findAll({
-    where: {
-      username1: {
-        [Op.eq]: username,
-      },
-    },
-  })
+UserController.findAll = (req, res) => {
+  User.findAll()
     .then((data) => {
-      res.send(data);
+      const UserSerializer = new Serializer("users", {
+        id: "username",
+        attributes: [
+          "username",
+          "name",
+          "email",
+          "role",
+          "createdAt",
+          "updatedAt",
+        ],
+      });
+
+      res.status(200).send(UserSerializer.serialize(data));
     })
     .catch((err) => {
       res.status(500).send({
@@ -23,10 +29,30 @@ UserController.findOne = (req, res) => {
     });
 };
 
-UserController.findAll = (req, res) => {
-  User.findAll()
+UserController.findByUsername = (req, res) => {
+  const { username } = req.params;
+
+  User.findAll({
+    where: {
+      username: {
+        [Op.eq]: username,
+      },
+    },
+  })
     .then((data) => {
-      res.send(data);
+      const UserSerializer = new Serializer("users", {
+        id: "username",
+        attributes: [
+          "username",
+          "name",
+          "email",
+          "role",
+          "createdAt",
+          "updatedAt",
+        ],
+      });
+
+      res.status(200).send(UserSerializer.serialize(data));
     })
     .catch((err) => {
       res.status(500).send({

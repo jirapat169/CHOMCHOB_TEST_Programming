@@ -1,7 +1,7 @@
 import { sequelize } from "../models";
 import express from "express";
 import cors from "cors";
-import UserController from "./controllers/user/user.controller";
+import AppRouter from "./routers";
 
 var corsOptions = {
   origin: "*",
@@ -12,7 +12,7 @@ app.use(cors(corsOptions));
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 
-app.get("/", UserController.findOne);
+AppRouter(app);
 
 const PORT = process.env.PORT || 3100;
 app.listen(PORT, async () => {
