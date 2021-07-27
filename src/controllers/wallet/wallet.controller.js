@@ -44,9 +44,16 @@ WalletController.findAll = (req, res) => {
 
 WalletController.findByUsername = (req, res) => {
   const { username } = req.params;
-  Wallet.findAll({ where: { [Op.eq]: username }, include: [User] })
+  Wallet.findAll({
+    where: {
+      username: {
+        [Op.eq]: username,
+      },
+    },
+    include: [User],
+  })
     .then((data) => {
-      const jsonapi = new Serializer("user", {
+      const jsonapi = new Serializer("wallets", {
         id: "id",
         attributes: [
           "username",
