@@ -21,7 +21,7 @@ $ npm install
 
 ```bash
 #if you have old database
-$ npx sequelize-cli db:brop
+$ npx sequelize-cli db:drop
 
 #create new database
 $ npx sequelize-cli db:create
