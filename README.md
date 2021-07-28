@@ -37,9 +37,7 @@ $ npm run dev
 
 JSON API Format only GET Method
 
-|  Description   | Method | URL                             | Body | Respnose                                                                          |
-| :------------: | :----: | :------------------------------ | :--: | :-------------------------------------------------------------------------------- |
-|  Get all user  |  GET   | localhost:3100/api/user         | null | ![img](/documentation/GetAllUser.PNG)                                             |
-|  Get one user  |  GET   | localhost:3100/api/user/user1   | null | ![img](/documentation/GetOneUser.PNG)                                             |
-| Get all wallet |  GET   | localhost:3100/api/wallet       | null | ![img](/documentation/GetAllWallet1.PNG) ![img](/documentation/GetAllWallet2.PNG) |
-| Get one wallet |  GET   | localhost:3100/api/wallet/user2 | null | ![img](/documentation/GetOneWallet.PNG)                                           |
+## Get all users
+
+**Method** : GET
+**URL** : localhost:3100/api/user
