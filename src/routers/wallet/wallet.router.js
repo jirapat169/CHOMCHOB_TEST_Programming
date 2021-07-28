@@ -7,6 +7,7 @@ const WalletRouter = (app) => {
   router.get("/", WalletController.findAll);
   router.get("/:username", WalletController.findByUsername);
   router.post("/", WalletController.create);
+  router.post("/transfer", WalletController.transfer);
   router.put("/:username", WalletController.update);
   router.delete("/:username", WalletController.delete);
 

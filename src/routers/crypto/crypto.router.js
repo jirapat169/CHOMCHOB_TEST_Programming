@@ -5,6 +5,7 @@ const CryptoRouter = (app) => {
   const router = Router();
 
   router.get("/", CryptoController.findAll);
+  router.get("/allbalance/", CryptoController.findAllBalance);
   router.get("/:name", CryptoController.findByName);
   router.post("/", CryptoController.create);
   router.put("/:name", CryptoController.updateRate);

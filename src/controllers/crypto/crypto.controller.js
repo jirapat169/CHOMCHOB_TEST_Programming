@@ -1,8 +1,11 @@
 import { Op } from "sequelize";
-import Models from "../../../models";
+import Models, { sequelize } from "../../../models";
 import { Serializer } from "jsonapi-serializer";
 
 const Crypto = Models.Crypto;
+const Wallet = Models.Wallet;
+const User = Models.User;
+
 const CryptoController = {};
 
 CryptoController.findAll = async (req, res) => {
@@ -14,6 +17,31 @@ CryptoController.findAll = async (req, res) => {
     const jsonapi = new Serializer("crypto", {
       id: "name",
       attributes: ["name", "rate_to_btc", "createdAt", "updatedAt"],
+    }).serialize(data);
+
+    res.status(200).send(jsonapi);
+  } catch (error) {
+    res.status(500).send({
+      message: error,
+    });
+  }
+};
+
+CryptoController.findAllBalance = async (req, res) => {
+  try {
+    const data = await Wallet.findAll({
+      attributes: [
+        "crypto_name",
+        [sequelize.fn("SUM", sequelize.col("amount")), "amount"],
+      ],
+      group: "Wallet.crypto_name",
+    }).catch((reason) => {
+      throw reason;
+    });
+
+    const jsonapi = new Serializer("all_balance", {
+      id: "crypto_name",
+      attributes: ["crypto_name", "amount"],
     }).serialize(data);
 
     res.status(200).send(jsonapi);

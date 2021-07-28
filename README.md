@@ -1,6 +1,7 @@
 # CHOMCHOB Backend testing
 
 This is Part 1 of [ChomCHOB Backend Testing](https://github.com/ChomCHOB/chomchob-backend-testing)
+This project using Bitcoin to main exchange rate.
 
 **This project using**
 
@@ -19,6 +20,10 @@ $ npm install
 # Initial the database
 
 ```bash
+#if you have old database
+$ npx sequelize-cli db:brop
+
+#create new database
 $ npx sequelize-cli db:create
 $ npx sequelize-cli db:migrate
 $ npx sequelize-cli db:seed:all
@@ -433,6 +438,64 @@ JSON API Format only GET Method
 ```json
 {
   "rate_to_btc": 20
+}
+```
+
+- Respnose :
+
+```json
+{
+  "success": true
+}
+```
+
+---
+
+### Balance of all cryptocurrency.
+
+- Method : GET
+- URL : localhost:3100/api/crypto/allbalance
+- Request Body : null
+- Respnose :
+
+```json
+{
+  "data": [
+    {
+      "type": "all_balances",
+      "id": "BTC",
+      "attributes": {
+        "crypto-name": "BTC",
+        "amount": 5
+      }
+    },
+    {
+      "type": "all_balances",
+      "id": "ETH",
+      "attributes": {
+        "crypto-name": "ETH",
+        "amount": 1010
+      }
+    }
+  ]
+}
+```
+
+---
+
+### User transfer cryptocurrency.
+
+- Method : POST
+- URL : localhost:3100/api/wallet/transfer
+- Request Body :
+
+```json
+{
+  "username": "user2",
+  "crypto_name": "ETH",
+  "amount": "10",
+  "to_username": "user1",
+  "to_crypto_name": "BTC"
 }
 ```
 
