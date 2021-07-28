@@ -24,6 +24,7 @@ WalletController.findAll = (req, res) => {
           ref: "id",
           included: true,
           attributes: [
+            "id",
             "username",
             "crypto_name",
             "amount",
@@ -56,6 +57,7 @@ WalletController.findByUsername = (req, res) => {
       const jsonapi = new Serializer("wallets", {
         id: "id",
         attributes: [
+          "id",
           "username",
           "crypto_name",
           "amount",
@@ -66,6 +68,9 @@ WalletController.findByUsername = (req, res) => {
         User: {
           ref: "username",
           included: true,
+          typeForAttribute: function (attribute, user) {
+            return "user";
+          },
           attributes: [
             "username",
             "name",
@@ -88,7 +93,67 @@ WalletController.findByUsername = (req, res) => {
 
 WalletController.create = (req, res) => {};
 
-WalletController.update = (req, res) => {};
+WalletController.update = async (req, res) => {
+  const { username } = req.params;
+  const { crypto_name, amount, type } = req.body;
+
+  try {
+    let balance = await Wallet.findAll({
+      where: {
+        username: {
+          [Op.eq]: username,
+        },
+        crypto_name: {
+          [Op.eq]: crypto_name,
+        },
+      },
+    });
+
+    if (balance.length > 0) {
+      let query;
+      if (type === "increase") {
+        query = Wallet.increment("amount", {
+          by: amount,
+          where: { username: username, crypto_name: crypto_name },
+        });
+      } else if (type === "decrease") {
+        if (balance[0]["amount"] - amount < 0) {
+          res.status(400).send({
+            message: "balance is not enough",
+            data: balance,
+          });
+          return;
+        }
+        query = Wallet.decrement("amount", {
+          by: amount,
+          where: { username: username, crypto_name: crypto_name },
+        });
+      } else {
+        res.status(500).send({
+          message: `type for update is invaild.`,
+        });
+      }
+
+      query
+        .then((data) => {
+          res.status(200).send(data);
+        })
+        .catch((err) => {
+          res.status(500).send({
+            message: err.message,
+          });
+        });
+    } else {
+      res.status(400).send({
+        message: `${username} don't have ${crypto_name}`,
+      });
+    }
+  } catch (error) {
+    res.status(500).send({
+      message: error,
+    });
+  }
+};
 
 WalletController.delete = (req, res) => {};
 
